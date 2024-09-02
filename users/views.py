@@ -60,7 +60,7 @@ class SendFriendRequestView(generics.CreateAPIView):
         # Check if there's already a friend request or if they are already friends
         if Request.objects.filter(sender=sender, subject=subject).exists():
             return Response({"message": "error","error":"Friend request already sent"}, status=status.HTTP_400_BAD_REQUEST)
-        if subject.friends_with.filter(id=sender.id).exists():
+        if subject.friends.filter(id=sender.id).exists():
             return Response({"message": "error","error":"You are already friends"}, status=status.HTTP_400_BAD_REQUEST)
 
         # Check request limit within 1 minute
